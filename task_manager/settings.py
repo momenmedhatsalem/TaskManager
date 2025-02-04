@@ -39,7 +39,13 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
 
     # Third Party
+    "allauth", 
+    "allauth.account",
+    'allauth.socialaccount',
     'rest_framework',
+    'rest_framework.authtoken',
+    'dj_rest_auth',
+    'dj_rest_auth.registration',
 
 
     # Apps
@@ -54,6 +60,9 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+
+    # third-party
+    "allauth.account.middleware.AccountMiddleware",
 ]
 
 ROOT_URLCONF = "task_manager.urls"
@@ -122,16 +131,49 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = "static/"
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+# django-allauth config
+SITE_ID = 1
+AUTHENTICATION_BACKENDS = (
+    "django.contrib.auth.backends.ModelBackend",
+    "allauth.account.auth_backends.AuthenticationBackend",
 
+)
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend" 
+
+
+ACCOUNT_SESSION_REMEMBER = True 
 # Configure REST framework
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
-    ),
+    "DEFAULT_PERMISSION_CLASSES": [
+    "rest_framework.permissions.AllowAny",
+    ],
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+    'dj_rest_auth.jwt_auth.JWTCookieAuthentication',
+    ],
 }
+
+ACCOUNT_EMAIL_VERIFICATION = "none"
+REST_AUTH = {
+    'USE_JWT': True,  # Enable JWT authentication
+    'JWT_AUTH_REFRESH_COOKIE': 'my-refresh-token',  # Cookie name for refresh token
+    'JWT_AUTH_COOKIE_USE_CSRF': False,  # No CSRF protection needed for JWT cookies
+    'JWT_AUTH_COOKIE_ENFORCE_CSRF_ON_UNAUTHENTICATED': False,  # No CSRF enforcement for unauthenticated users
+}
+
+CSRF_COOKIE_SAMESITE = 'None'
+CSRF_COOKIE_SECURE = True 
+CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_CREDENTIALS = True
+SESSION_COOKIE_AGE = 1209600  # 2 weeks
+
+
+STATIC_URL = "static/"
+STATICFILES_DIRS = [
+    BASE_DIR / "static"
+]
