@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <title>Signup</title>
+    <h2>Signup</h2>
+    <div class="signup-container">
+        <form id="signupForm">
+            <input type="text" id="username" placeholder="Username" required><br>
+            <input type="email" id="email" placeholder="Email" required><br>
+            <input type="password" id="password" placeholder="Password" required><br>
+            <input type="password" id="confirm_password" placeholder="Confirm Password" required><br>
+            <button type="submit">Signup</button>
+            <p>Already have an account? <a href="{% url 'login' %}" class="login-link">Login instead</a></p>
+
+        </form>
+    </div>
+    <p id="message"></p>
+
+<script>
+    document.getElementById("signupForm").addEventListener("submit", async function(event) {
+        event.preventDefault();
+        
+        const username = document.getElementById("username").value;
+        const email = document.getElementById("email").value;
+        const password1 = document.getElementById("password").value; // `password1` as required by dj-rest-auth
+        const password2 = document.getElementById("confirm_password").value; // `password2` for confirmation
+
+        const response = await fetch("/api/user/register/", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ username, email, password1, password2 })
+        });
+
+        const data = await response.json();
+        console.log(data);
+        if (response.ok) {
+            localStorage.setItem("access_token", data.access);  // dj-rest-auth returns `access`, not `tokens.access`
+            localStorage.setItem("refresh_token", data.refresh); // dj-rest-auth returns `refresh`, not `tokens.refresh`
+            window.location.href = "{% url 'tasks' %}"; // Redirect to login page
+        } else {
+            document.getElementById("message").innerText = data.detail || "Signup failed. Please try again.";
+        }
+    });
+</script>
+
+{% endblock %}
