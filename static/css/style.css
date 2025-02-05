@@ -1,0 +1,234 @@
+/* Navbar Styles */
+.navbar {
+  width: 100%;
+  background: #007bff;
+  padding: 15px 0;
+  text-align: center;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.nav-links {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+}
+
+.nav-links a {
+  color: white;
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 10px 20px;
+  transition: 0.3s;
+  border-radius: 5px;
+}
+
+.nav-links a:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+
+/* TaskList */
+
+
+  /* Container */
+  .task-container, .signup-container, .login-container {
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+
+  /* Title */
+  .task-title {
+    font-size: 26px;
+    font-weight: bold;
+    color: #222;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  /* Task List */
+  .task-list {
+    list-style: none;
+    padding: 0;
+  }
+
+  /* Task Item */
+  .task-item {
+    background: linear-gradient(135deg, #f9f9f9, #ececec);
+    padding: 12px 15px;
+    border-radius: 10px;
+    margin-bottom: 12px;
+    display: flex;
+    justify-content: space-between; /* Keeps elements on the same line */
+    align-items: center; /* Aligns items properly */
+    transition: transform 0.2s, box-shadow 0.3s;
+  }
+
+  .task-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  /* Task Content (Title + Status) */
+  .task-item {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Adds space between title and status */
+    flex-grow: 1; /* Makes sure content expands properly */
+  }
+  .task-content {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Adds space between title and status */
+    flex-grow: 1; /* Makes sure content expands properly */
+  }
+
+  /* Task Status */
+  .task-status {
+    font-size: 18px;
+    font-weight: 500;
+  }
+
+  .task-completed {
+    color: #28a745;
+  }
+
+  .task-not-completed {
+    color: #dc3545;
+  }
+
+  /* Edit Button */
+.edit-link {
+  display: inline-block; /* Ensures proper padding & width handling */
+  text-align: center; /* Centers text inside */
+  padding: 10px 15px;
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+  background: #007bff;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: background 0.3s, transform 0.2s;
+}
+
+.edit-link:hover {
+  background: #0056b3;
+  transform: scale(1.05);
+}
+
+
+
+/* TaskForm */
+
+  /* Container */
+  #task-form {
+    max-width: 500px;
+    margin: 40px auto;
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+
+  /* Form Title */
+  h2 {
+    font-size: 26px;
+    font-weight: bold;
+    color: #222;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  /* Input Fields */
+  input,
+  textarea {
+    width: 90%;
+    padding: 12px;
+    margin-bottom: 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 16px;
+    transition: 0.3s;
+  }
+
+  input:focus,
+  textarea:focus {
+    border-color: #007bff;
+    box-shadow: 0px 0px 8px rgba(0, 123, 255, 0.2);
+    outline: none;
+  }
+
+  textarea {
+    height: 100px;
+    resize: vertical;
+  }
+
+  /* Checkbox */
+  label {
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    justify-content: center;
+    margin: 12px 0;
+  }
+
+  input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: #007bff;
+  }
+
+  /* Submit Button */
+  button {
+    width: 95%;
+    padding: 12px;
+    font-size: 18px;
+    font-weight: bold;
+    background: linear-gradient(135deg, #007bff, #0056b3);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+  }
+
+  button:hover {
+    background: linear-gradient(135deg, #0056b3, #003f7f);
+    transform: scale(1.03);
+  }
+  body {
+    margin: 0;
+  }
+  /* Mobile Responsiveness */
+  @media (max-width: 600px) {
+    #task-form {
+      width: 90%;
+    }
+  }
+
+
+
+  /* Login / Signup */
+    .login-link {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+    transition: 0.3s;
+  }
+
+  .login-link:hover {
+    text-decoration: underline;
+    color: #0056b3;
+  }
