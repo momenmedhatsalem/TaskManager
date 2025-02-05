@@ -67,6 +67,9 @@ Visit **http://127.0.0.1:8000/** in your browser to access the application.
 | DELETE | `/api/tasks/{id}/` | Delete a task |
 
 ---
+## Swagger UI API Docs
+**http://127.0.0.1:8000/api/schema/swagger-ui/**
+
 
 ## Authentication
 This project uses **JWT Authentication**. To access secured endpoints:
