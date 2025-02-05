@@ -33,10 +33,17 @@ async function fetchWithAuth(url, method = "GET", body = null) {
       } else {
         console.log("Session expired. Redirecting to login...");
         localStorage.clear();
-        window.location.href = "{% url 'login' %}"; // Redirect to login page
+        window.location.href = "/login/"; // Redirect to login page
       }
     }
   }
 
   return response;
 }
+
+// isAuthenticated function that checks through backend if the user is authenticated
+async function isAuthenticated() {
+  let response = await fetchWithAuth("/api/tasks/");
+  return response.ok;
+}
+
