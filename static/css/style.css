@@ -84,12 +84,34 @@
     gap: 10px; /* Adds space between title and status */
     flex-grow: 1; /* Makes sure content expands properly */
   }
+  /* Task Content (Title + Status) */
   .task-content {
     display: flex;
-    align-items: center;
-    gap: 10px; /* Adds space between title and status */
-    flex-grow: 1; /* Makes sure content expands properly */
+    flex-direction: column; /* Stack elements vertically */
+    align-items: flex-start; /* Align text to the left */
+    gap: 5px; /* Space between elements */
+    flex-grow: 1;
   }
+
+  /* Task Title and Status Container */
+  .task-header {
+    display: flex;
+    justify-content: space-between; /* Pushes title and status apart */
+    width: 100%;
+  }
+
+  /* Task Description */
+  .task-description {
+    width: 95%; /* Makes textarea take full width */
+    height: 20px;
+    resize: none; /* Prevents resizing */
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    background: #f9f9f9;
+    font-size: 14px;
+  }
+
 
   /* Task Status */
   .task-status {
