@@ -46,9 +46,10 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'dj_rest_auth',
     'dj_rest_auth.registration',
+    "drf_spectacular",
 
 
-    # Apps
+    # local
     'tasks',
 ]
 
@@ -156,6 +157,7 @@ REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
     'dj_rest_auth.jwt_auth.JWTCookieAuthentication',
     ],
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 }
 
 ACCOUNT_EMAIL_VERIFICATION = "none"
@@ -177,3 +179,11 @@ STATIC_URL = "static/"
 STATICFILES_DIRS = [
     BASE_DIR / "static"
 ]
+
+# django_project/settings.py
+SPECTACULAR_SETTINGS = {
+"TITLE": "Blog API Project",
+"DESCRIPTION": "A sample blog to learn about DRF",
+"VERSION": "1.0.0",
+# OTHER SETTINGS
+}
