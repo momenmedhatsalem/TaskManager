@@ -21,7 +21,6 @@ class TaskViewSet(viewsets.ModelViewSet):
         """
         Optionally restricts the returned tasks to the authenticated user.
         """
-        print("----------------list----------------")
         try:
             return Task.objects.filter(user=self.request.user)
         except:
@@ -29,7 +28,6 @@ class TaskViewSet(viewsets.ModelViewSet):
             return Task.objects.none()
 
     def perform_create(self, serializer):
-        print("----------------create----------------")
         # Automatically associate the task with the authenticated user
         serializer.save(user=self.request.user)
 
