@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>{{ is_editing|yesno:"Edit Task,Create Task" }}</h2>
+
+  <form id="task-form">
+    <input type="text" id="title" name="title" placeholder="Task Title" required />
+    <textarea id="description" name="description" placeholder="Task Description"></textarea>
+    <label>
+      Completed:
+      <input type="checkbox" id="completed" name="completed" />
+    </label>
+    <button type="submit">{{ is_editing|yesno:"Update Task,Create Task" }}</button>
+  </form>
+
+  <script>
+    const isEditing = {{ is_editing|lower }};
+    const taskId = "{{ task_id }}";
+
+    document.addEventListener("DOMContentLoaded", async () => {
+      // Check if user is authenticated
+      if (!isAuthenticated()) {
+        window.location.href = "{% url 'login' %}";
+      }
+      if (isEditing && taskId) {
+        const response = await fetchWithAuth(`/api/tasks/${taskId}/`, 'GET');
+        const task = await response.json();
+
+        document.getElementById("title").value = task.title;
+        document.getElementById("description").value = task.description;
+        document.getElementById("completed").checked = task.completed;
+      }
+    });
+
+    document.getElementById("task-form").addEventListener("submit", async function(event) {
+      event.preventDefault();
+
+      const taskData = {
+        title: document.getElementById("title").value,
+        description: document.getElementById("description").value,
+        completed: document.getElementById("completed").checked,
+      };
+
+      const url = isEditing ? `/api/tasks/${taskId}/` : '/api/tasks/';
+      const method = isEditing ? 'PUT' : 'POST';
+
+      const response = await fetchWithAuth(url, method, taskData);
+
+      if (response.ok) {
+        window.location.href = "{% url 'tasks' %}";
+      } else {
+        alert("Failed to save task.");
+      }
+    });
+  </script>
+
+
+
+{% endblock %}
