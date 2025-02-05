@@ -12,8 +12,12 @@ The **Task Manager Project** is a Django-based web application that allows users
 - API endpoints for frontend integration
 
 ---
-
-## Installation
+## Docker Installation
+```bash
+docker-compose build --no-cache
+docker-compose up
+```
+## Manual Installation
 
 ### 1. Clone the Repository
 ```bash
