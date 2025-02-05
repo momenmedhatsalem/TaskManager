@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+  <div class="task-container">
+    <h2 class="task-title">Task List</h2>
+    <ul id="task-list" class="task-list"></ul>
+    <a href="{% url 'task_create' %}" class="edit-link">Create Task</a>
+  </div>
+
+  <script>
+    async function fetchTasks() {
+      try {
+        const response = await fetchWithAuth('/api/tasks/', 'GET');
+        const data = await response.json();
+        const taskList = document.getElementById('task-list');
+        taskList.innerHTML = "";
+
+        data.forEach(task => {
+          const li = document.createElement('li');
+          li.className = 'task-item';
+          const editUrl = `{% url 'task_edit' task_id=0 %}`.replace('0', task.id);
+          
+          li.innerHTML = `
+            <div class="task-content">
+              <div class="task-header">
+                <span>${task.title}</span>
+                <span class="task-status ${task.completed ? 'task-completed' : 'task-not-completed'}">
+                  ${task.completed ? 'Completed' : 'Not Completed'}
+                </span>
+              </div>
+              <textarea class="task-description" readonly>${task.description}</textarea>
+            </div>
+            <a href="${editUrl}" class="edit-link">✏️ Edit</a>
+          `;
+          
+          taskList.appendChild(li);
+        });
+
+      } catch (error) {
+        console.error('Error fetching tasks:', error);
+      }
+    }
+
+    fetchTasks();
+  </script>
+{% endblock %}
