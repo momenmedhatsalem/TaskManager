@@ -15,27 +15,36 @@ async function fetchWithAuth(url, method = "GET", body = null) {
   if (response.status === 401) {
     // Unauthorized - token may be expired
     const refreshToken = localStorage.getItem("refresh_token");
-    // If no refresh token, redirect to login
+
     if (!refreshToken) {
-    window.location.href = "/login/";
+      localStorage.clear(); // Ensure we clear all stored tokens
+      window.location.href = "/login/";
+      return;
     }
-    else {
+
+    try {
       let refreshResponse = await fetch("/api/token/refresh/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ refresh: refreshToken }),
       });
 
+      if (!refreshResponse.ok) {
+        throw new Error("Refresh token invalid");
+      }
+
       let refreshData = await refreshResponse.json();
-      if (refreshResponse.ok) {
+      if (refreshData.access) {
         localStorage.setItem("access_token", refreshData.access);
         return fetchWithAuth(url, method, body); // Retry request
-      } else {
-        console.log("Session expired. Redirecting to login...");
-        localStorage.clear();
-        window.location.href = "/login/"; // Redirect to login page
       }
+    } catch (error) {
+      console.error("Session expired. Redirecting to login...", error);
+      localStorage.clear();
+      window.location.href = "/login/";
     }
+  } else if (!response.ok) {
+    throw new Error(`Request failed with status ${response.status}`);
   }
 
   return response;
@@ -46,4 +55,3 @@ async function isAuthenticated() {
   let response = await fetchWithAuth("/api/tasks/");
   return response.ok;
 }
-
